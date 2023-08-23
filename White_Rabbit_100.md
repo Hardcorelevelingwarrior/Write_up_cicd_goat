@@ -61,6 +61,19 @@ stage('Looking for credentials') {
 
 Take that base64 string and decode it and we will have the flag : 06165DF2-C047-4402-8CAB-1C8EC526C115
 
+## Lesson learned 
+
+Anyone with write access to a repository built on Jenkins can uncover all Global credentials by modifying a Jenkinsfile in that repository.
+
+Anyone who can create jobs on Jenkins can uncover all Global secrets by creating a pipeline job.
+
+## Best practices
+
+1. Hide Jenkins behind a VPN
+2. Regularly update Jenkins
+3. Follow the principle of least privilege
+4. Limit the access scope
+
 ## Reference 
 https://cloud.hacktricks.xyz/pentesting-ci-cd/jenkins-security/basic-jenkins-information
 https://www.codurance.com/publications/2019/05/30/accessing-and-dumping-jenkins-credentials
